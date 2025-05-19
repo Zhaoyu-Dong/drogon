@@ -208,7 +208,9 @@ void HttpServer::onMessage(const TcpConnectionPtr &conn, MsgBuffer *buf)
             buf->retrieveAll();
             // NOTE: should we call conn->forceClose() instead?
             // Calling shutdown() handles socket more elegantly.
-            conn->shutdown();
+            //conn->shutdown();
+            // force to close this connection to avoid too many connection error
+            conn->forceClose();
             // We have to call clearContext() here in order to ignore following
             // illegal data from client
             conn->clearContext();
